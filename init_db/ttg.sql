@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 
--- TRUNCATE TABLE users RESTART IDENTITY CASCADE; -- ลบ users และรี ID
+TRUNCATE TABLE users RESTART IDENTITY CASCADE; -- ลบ users และรี ID
 SELECT * FROM users;
 
 
@@ -22,9 +22,11 @@ CREATE TABLE IF NOT EXISTS places (
     picture_url TEXT NOT NULL   
 );
 
+-- TRUNCATE TABLE places RESTART IDENTITY CASCADE; -- ลบ places และรี ID
+SELECT * FROM places;
+
 INSERT INTO places
 VALUES (1,'วัดพระศรีรัตนศาสดาราม', 'กรุงเทพมหานครฯ', 'กลาง', 'https://static.thairath.co.th/media/dFQROr7oWzulq5FZUEh3MRrERXP2ZCRNt1ty78Z5HuJ2mEG4frJaJLYSmi7PuWvciU0.jpg');
 
--- TRUNCATE TABLE places RESTART IDENTITY CASCADE; -- ลบ places และรี ID
-SELECT * FROM places;
+
 

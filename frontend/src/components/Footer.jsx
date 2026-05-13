@@ -1,56 +1,70 @@
-import styles from './Footer.module.css'
-
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.inner}>
-        <div className={styles.top}>
-          <div className={styles.brand}>
-            <div className={styles.logo}>
-              <span className={styles.logoIcon}>V</span>
-              <span className={styles.logoText}>Verdee</span>
+    <footer className="bg-gray-900 text-gray-400 py-10 px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+          <div className="col-span-2 md:col-span-1">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white font-black"></div>
+              <span className="text-white font-bold">TTG</span>
             </div>
-            <p className={styles.tagline}>ซื้อ-ขาย ออนไลน์ ง่าย ปลอดภัย ได้เงินเร็ว</p>
-            <div className={styles.stores}>
-              <button className={styles.storeBtn}>📱 App Store</button>
-              <button className={styles.storeBtn}>🤖 Google Play</button>
+            <p className="text-xs leading-relaxed mb-3">
+              แพลตฟอร์มท่องเที่ยวไทยครบวงจร ค้นพบความงามของไทยได้ที่นี่
+            </p>
+          </div>
+
+          {[
+            {
+              title: "สำรวจ",
+              links: [
+                "ภาคเหนือ",
+                "ภาคกลาง",
+                "ภาคใต้",
+                "ภาคอีสาน",
+                "ภาคตะวันออก",
+              ],
+            },
+            {
+              title: "ประเภท",
+              links: ["ชายหาด", "วัดและศาสนา", "ภูเขา", "อุทยาน", "ตลาดชุมชน"],
+            },
+            {
+              title: "เกี่ยวกับ",
+              links: [
+                "เกี่ยวกับเรา",
+                "ติดต่อเรา",
+                "นโยบายความเป็นส่วนตัว",
+                "เงื่อนไขการใช้งาน",
+              ],
+            },
+          ].map((col) => (
+            <div key={col.title}>
+              <h4 className="text-white font-semibold text-sm mb-3">
+                {col.title}
+              </h4>
+              <ul className="space-y-2">
+                {col.links.map((l) => (
+                  <li key={l}>
+                    <a
+                      // href="#"
+                      className="text-xs hover:text-emerald-400 transition"
+                    >
+                      {l}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-
-          <div className={styles.linksGroup}>
-            <h4>บริษัท</h4>
-            <a href="#">เกี่ยวกับเรา</a>
-            <a href="#">ร่วมงานกับเรา</a>
-            <a href="#">ข่าวสาร</a>
-            <a href="#">ติดต่อเรา</a>
-          </div>
-
-          <div className={styles.linksGroup}>
-            <h4>หมวดหมู่</h4>
-            <a href="#">รถมือสอง</a>
-            <a href="#">อสังหาริมทรัพย์</a>
-            <a href="#">มือถือ</a>
-            <a href="#">สัตว์เลี้ยง</a>
-          </div>
-
-          <div className={styles.linksGroup}>
-            <h4>ช่วยเหลือ</h4>
-            <a href="#">วิธีใช้งาน</a>
-            <a href="#">ความปลอดภัย</a>
-            <a href="#">รายงานปัญหา</a>
-            <a href="#">นโยบายความเป็นส่วนตัว</a>
-          </div>
+          ))}
         </div>
 
-        <div className={styles.bottom}>
-          <p>© 2025 Verdee. สงวนลิขสิทธิ์ทุกประการ</p>
-          <div className={styles.socials}>
-            <span>Facebook</span>
-            <span>Instagram</span>
-            <span>Line</span>
-          </div>
+        <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs">
+          <p>© 2026 TTG สงวนลิขสิทธิ์</p>
+          <p className="text-gray-600">
+            Built with React + Tailwind CSS · FastAPI Backend
+          </p>
         </div>
       </div>
     </footer>
-  )
+  );
 }

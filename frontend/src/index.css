@@ -1,58 +1,22 @@
-:root {
-  --primary: #16a34a;
-  --primary-dark: #15803d;
-  --primary-light: #22c55e;
-  --primary-xlight: #bbf7d0;
-  --primary-bg: #f0fdf4;
-  --accent: #f97316;
-  --accent-dark: #ea6c08;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --text-muted: #9ca3af;
-  --border: #e5e7eb;
-  --border-light: #f3f4f6;
-  --white: #ffffff;
-  --hero-bg: #14532d;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
-  --radius: 12px;
-  --radius-sm: 8px;
-  --radius-lg: 20px;
-  font-family: 'Sarabun', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap');
 
-*, *::before, *::after {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
-  background: #f8fafb;
-  color: var(--text-primary);
-  font-family: 'Sarabun', sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
+  font-family: 'Sarabun', 'Noto Sans Thai', sans-serif;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
+/* Hide scrollbar for horizontal tab scroll */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
-
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-family: inherit;
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-
-img {
-  max-width: 100%;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--border-light); }
-::-webkit-scrollbar-thumb { background: var(--primary-xlight); border-radius: 3px; }

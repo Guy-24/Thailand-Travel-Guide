@@ -21,13 +21,18 @@ Base = declarative_base()
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
-    description="API Backend for RAG Chatbot",
+    description="API Backend for Thailand Travel Guide",
 )
+
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

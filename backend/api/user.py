@@ -22,13 +22,14 @@ from schemas import (
 
 GOOGLE_CLIENT_ID = os.getenv("Client_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("Client_Secret")
-GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/api/user/auth/callback"
+GOOGLE_REDIRECT_URI = "http://localhost:5173"
 
 
 router = APIRouter()
 
 @router.get("/", response_model=list[UserPrivate])
 async def read_all_users(
+    current_user: Annotated[models.User, Depends(verify_current_user)],
     db: db_dep,
 ):
     """
@@ -43,7 +44,7 @@ async def read_all_users(
 
 @router.get("/auth/callback")
 async def google_callback(code: str, db: db_dep):
-    # 1. นำ Code ไปแลก Access Token และ ID Token จาก Google
+    # นำ Code ไปแลก Access Token และ ID Token จาก Google
     token_url = "https://oauth2.googleapis.com/token"
     token_data = {
         "code": code,
@@ -61,23 +62,22 @@ async def google_callback(code: str, db: db_dep):
         token_json = token_res.json()
         google_access_token = token_json.get("access_token")
         
-        # 2. นำ Access Token ไปดึงข้อมูลโปรไฟล์ผู้ใช้
+        # นำ Access Token ไปดึงข้อมูลโปรไฟล์ผู้ใช้
         userinfo_url = "https://www.googleapis.com/oauth2/v2/userinfo"
         userinfo_res = await client.get(userinfo_url, headers={"Authorization": f"Bearer {google_access_token}"})
         user_info = userinfo_res.json()
         
-    # ข้อมูลที่ได้จาก Google
     google_id = user_info.get("id")
-    email = user_info.get("email")
+    email = user_info.get("email").lower()
     name = user_info.get("name")
     picture = user_info.get("picture")
 
-    # 3. เช็ค Database ของเรา
+    # เช็ค Database
     result = db.execute(select(models.User).where(models.User.google_id == google_id))
     user = result.scalars().first()
     
     if not user:
-        # 3.1 ถ้ายกเลิก /regis แล้ว ให้มาสร้าง User ตรงนี้แทน (สมัครสมาชิกอัตโนมัติ)
+        # สมัครสมาชิก
         user = models.User(
             google_id=google_id,
             email=email,
@@ -88,13 +88,13 @@ async def google_callback(code: str, db: db_dep):
         db.commit()
         db.refresh(user)
     
-    # 4. ออก JWT Token ของระบบคุณเอง (ใช้ฟังก์ชันเดิมของคุณที่เคยออก Token ตอน Login)
-    # สมมติว่าคุณมีฟังก์ชัน create_access_token() อยู่แล้ว
-    access_token = create_access_token(data={"sub": str(user.id)}) # เก็บ user.id ของระบบเราไว้ใน Token
+    # ออก JWT Token
+    access_token = create_access_token(data={"sub": str(user.id)}) # เก็บ user.id ไว้ใน Token
     
     return {
         "access_token": access_token, 
         "token_type": "bearer",
+        "id": user.id,
         "user_name": user.user_name,
         "picture_url": user.picture_url
     }
@@ -169,26 +169,9 @@ async def update_user(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Username already exists",
             )
-    if (
-        user_update.email is not None
-        and user_update.email.lower() != user.email.lower()
-    ):
-        result = db.execute(
-            select(models.User).where(
-                func.lower(models.User.email) == user_update.email.lower(),
-            ),
-        )
-        existing_email = result.scalars().first()
-        if existing_email:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Email already registered",
-            )
 
     if user_update.user_name is not None:
         user.user_name = user_update.user_name
-    if user_update.email is not None:
-        user.email = user_update.email.lower()
 
     db.commit()
     db.refresh(user)
@@ -213,11 +196,6 @@ async def delete_user(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"User id:{user_id} not found",
-        )
-    if user.id == 1:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="You can't delete this user",
         )
 
     db.delete(user)

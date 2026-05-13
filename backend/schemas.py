@@ -30,5 +30,3 @@ class UserPrivate(UserPublic):
 
 class UserUpdate(BaseModel):
     user_name: str | None = Field(default=None, min_length=1, max_length=100)
-    email: EmailStr | None = Field(default=None, max_length=255)
-    picture_url: str | None = Field(default=None)
