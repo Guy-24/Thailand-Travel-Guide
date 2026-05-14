@@ -2,13 +2,10 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
-from typing import Any
 from sqlalchemy import JSON, Boolean, DateTime, FetchedValue, Float, ForeignKey, Integer, String, Text, Index
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from pgvector.sqlalchemy import Vector
-import uuid
 
 from database import Base
 

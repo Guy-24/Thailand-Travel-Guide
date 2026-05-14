@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 
 function AttractionCard({ attraction, favoriteItems, toggleFavorite }) {
