@@ -29,7 +29,7 @@ export default function HeroBanner() {
           </div>
           <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur px-4 py-2 rounded-full">
             <span>🗺️</span>
-            <span>แผนที่นำทาง</span>
+            <span>สำรวจสถานที่แปลกใหม่</span>
           </div>
         </div>
       </div>

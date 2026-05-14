@@ -1,4 +1,5 @@
 const REGIONS = [
+  { label: "ทั้งหมด", icon: "🗺️" },
   { label: "ยอดนิยม", icon: "👍" },
   { label: "ภาคเหนือ", icon: "🏔️" },
   { label: "ภาคกลาง", icon: "🏛️" },
@@ -14,11 +15,15 @@ const CATEGORIES = [
   { label: "พิพิธภัณฑ์", icon: "🏛️" },
   { label: "อุทยานธรรมชาติ", icon: "🌿" },
   { label: "ตลาดและชุมชน", icon: "🛍️" },
-  { label: "กิจกรรมผจญภัย", icon: "🧗" },
-  { label: "เพิ่มเติม", icon: "⋯" },
+  { label: "สถาปัตยกรรม", icon: "🏦" },
 ];
 
-export default function RegionTabs({ activeRegion, setActiveRegion }) {
+export default function RegionTabs({
+  activeRegion,
+  setActiveRegion,
+  activeCategory,
+  setActiveCategory,
+}) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
       {/* Region tabs */}
@@ -44,7 +49,16 @@ export default function RegionTabs({ activeRegion, setActiveRegion }) {
         {CATEGORIES.map((cat) => (
           <button
             key={cat.label}
-            className="flex flex-col items-center gap-2 p-4 hover:bg-emerald-50 hover:text-emerald-700 transition group"
+            onClick={() =>
+              setActiveCategory(
+                activeCategory === cat.label ? "ทั้งหมด" : cat.label,
+              )
+            }
+            className={`flex flex-col items-center gap-2 p-4 transition group ${
+              activeCategory === cat.label
+                ? "bg-emerald-50 text-emerald-700" 
+                : "hover:bg-gray-50 hover:text-emerald-700" 
+            }`}
           >
             <div className="w-12 h-12 bg-emerald-50 group-hover:bg-emerald-100 rounded-xl flex items-center justify-center text-2xl transition">
               {cat.icon}

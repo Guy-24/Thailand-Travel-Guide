@@ -37,9 +37,9 @@ export default function WhySection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               { icon: "🌏", title: "ครบทุกภูมิภาค", desc: "ข้อมูลสถานที่ท่องเที่ยวครบ 77 จังหวัด 5 ภูมิภาค" },
-              { icon: "⭐", title: "รีวิวจริงจากผู้ใช้", desc: "รีวิวจากนักท่องเที่ยวที่เดินทางจริง ไม่มีรีวิวปลอม" },
-              { icon: "🗺️", title: "วางแผนทริปง่าย", desc: "เลือกสถานที่แล้วระบบช่วยจัดเส้นทางให้อัตโนมัติ" },
-              { icon: "📱", title: "ใช้งานได้ทุกอุปกรณ์", desc: "รองรับทั้ง iOS และ Android อัปเดตข้อมูลตลอดเวลา" },
+              { icon: "⭐", title: "รีวิวจริงจากผู้ใช้", desc: "รีวิวโดยนักท่องจากหลากหลายพื้นที่ทั่วโลก" },
+              { icon: "🗺️", title: "วางแผนทริปง่าย", desc: "หาสถานที่และแหล่งท่องเที่ยวที่เหมาะกับคุณที่สุด" },
+              { icon: "🧗", title: "สร้างประสบการณ์ไม่รู้ลืม", desc: "มาทำให้การเดินทางครั้งนี้เป็นที่จดจำตลอดไป" },
             ].map((item) => (
               <div key={item.title} className="flex gap-3 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
                 <div className="text-2xl shrink-0">{item.icon}</div>

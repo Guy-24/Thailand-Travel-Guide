@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import sessionmaker
 import os
 from dotenv import load_dotenv 
-from api import user
+from api import user, place, review
 from core.config import settings
 from core.dependencies import verify_current_user, db_dep
 
@@ -40,6 +40,8 @@ app.add_middleware(
 
 # Include routers
 app.include_router(user.router, prefix="/api/user", tags=["user"])
+app.include_router(place.router, prefix="/api/place", tags=["place"])
+app.include_router(review.router, prefix="/api/review", tags=["review"])
 
 @app.get("/")
 def read_root():

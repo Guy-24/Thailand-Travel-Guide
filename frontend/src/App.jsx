@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     // Check for stored session
     const stored = localStorage.getItem("tourism_user");
