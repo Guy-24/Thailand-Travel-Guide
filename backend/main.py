@@ -26,7 +26,8 @@ app = FastAPI(
 
 origins = [
     "http://localhost:5173",
-    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5173"
+    "https://thailand-travel-guide-frontend.onrender.com",
 ]
 
 # CORS middleware
