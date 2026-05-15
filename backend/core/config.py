@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     # CORS
     ALLOWED_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8000"]
     
-    secret_key: SecretStr
+    secret_key: SecretStr = SecretStr("temporary_secret_key_for_testing_purposes_only")
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
     
