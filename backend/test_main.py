@@ -4,10 +4,12 @@ from main import app
 import models
 from core.dependencies import verify_current_user
 from datetime import datetime, timezone
+from database import engine, Base 
+import models
 
 client = TestClient(app)
 
-
+Base.metadata.create_all(bind=engine)
 # จำลองผู้ใช้ (Mock User) ที่ล็อกอินด้วย Google ผ่านแล้ว
 
 def override_verify_current_user():
