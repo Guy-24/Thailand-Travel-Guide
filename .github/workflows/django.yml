@@ -1,8 +1,4 @@
-import os
-
-os.makedirs('.github/workflows', exist_ok=True)
-
-yaml_content = """name: Thailand Travel Guide CI
+name: Thailand Travel Guide CI
 
 on:
   push:
@@ -13,8 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    services:
 
     steps:
     - name: Check out code
@@ -29,7 +23,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
-        pip install pytest httpx
+        pip install pytest httpx requests sqlalchemy psycopg2-binary PyJWT argon2-cffi email-validator pgvector
 
     - name: Run Tests
       env:
@@ -39,7 +33,3 @@ jobs:
       run: |
         cd backend
         python -m pytest test_main.py -v
-"""
-
-with open('.github/workflows/django.yml', 'w', encoding='utf-8') as f:
-    f.write(yaml_content)
