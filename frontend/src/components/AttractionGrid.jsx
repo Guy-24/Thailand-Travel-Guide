@@ -45,7 +45,7 @@ function AttractionCard({ attraction, favoriteItems, toggleFavorite }) {
       setIsReviewOpen(false); // ปิด Popup
       setRatingInput(0); // รีเซ็ตดาว
 
-      alert("ขอขอบคุณสำหรับคะแนนรีวิว!");
+      alert("ขอขอบคุณสำหรับคะแนนรีวิว! ");
 
     } catch (err) {
       alert(err.message); 
