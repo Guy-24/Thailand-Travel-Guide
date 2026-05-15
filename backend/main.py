@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import json
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,8 +11,31 @@ from api import user, place, review
 from core.config import settings
 from core.dependencies import verify_current_user, db_dep
 import models
+from models import Place
+
 
 models.Base.metadata.create_all(bind=engine)
+
+def seed_data():
+    db = SessionLocal()
+    try:
+        if db.query(Place).count() == 0:
+            # หา path ของไฟล์ json
+            file_path = os.path.join(os.path.dirname(__file__), "places.json")
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            for item in data:
+                new_place = Place(**item) # กระจายค่าจาก dict เข้า Model
+                db.add(new_place)
+
+            db.commit()
+            print(f"Successfully seeded {len(data)} places.")
+    except Exception as e:
+        print(f"Error: {e}")
+        db.rollback()
+    finally:
+        db.close()
 
 load_dotenv()
 
