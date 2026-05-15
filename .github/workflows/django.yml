@@ -1,0 +1,36 @@
+name: Thailand Travel Guide CI
+
+on:
+  push:
+    branches: [ "main", "master", "dev" ] # เพิ่ม dev เข้าไปเพื่อให้มันรันที่ branch นี้ด้วย
+  pull_request:
+    branches: [ "main", "master", "dev" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.13
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.13"
+
+    - name: Install All Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install fastapi[all] pytest httpx requests sqlalchemy psycopg2-binary PyJWT argon2-cffi email-validator pgvector pydantic-settings python-dotenv
+
+    - name: Run Tests
+      env:
+        DATABASE_URL: "sqlite:///./test.db"
+        SECRET_KEY: "ci-test-key-12345"
+        ALGORITHM: "HS256"
+        CLIENT_ID: "mock_id"
+        CLIENT_SECRET: "mock_secret"
+      run: |
+        cd backend
+        python -m pytest test_main.py -v
