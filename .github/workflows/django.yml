@@ -9,6 +9,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # ใส่ env ไว้ตรงนี้เพื่อให้ทุกขั้นตอน (Steps) มองเห็นเหมือนกันหมด
+    env:
+      DATABASE_URL: sqlite:///./test.db
+      SECRET_KEY: "super-secret-key-for-testing-only" 
+      ALGORITHM: "HS256"
+      CLIENT_ID: "mock_id"
+      CLIENT_SECRET: "mock_secret"
 
     steps:
     - name: Check out code
@@ -22,16 +29,9 @@ jobs:
     - name: Install All Dependencies
       run: |
         python -m pip install --upgrade pip
-        # ติดตั้ง Library ทั้งหมดที่คุณต้องใช้โดยตรง
         pip install fastapi[all] pytest httpx requests sqlalchemy psycopg2-binary PyJWT argon2-cffi email-validator pgvector pydantic-settings python-dotenv
 
     - name: Run Tests
-      env:
-        DATABASE_URL: sqlite:///./test.db
-        secret_key: "test_secret_key_12345"
-        ALGORITHM: "HS256"
-        Client_ID: "mock_id"
-        Client_Secret: "mock_secret"
       run: |
         cd backend
         python -m pytest test_main.py -v
