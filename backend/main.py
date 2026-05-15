@@ -4,11 +4,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import sessionmaker
 import os
+from database import engine, Base
 from dotenv import load_dotenv 
 from api import user, place, review
 from core.config import settings
 from core.dependencies import verify_current_user, db_dep
-from database import engine
 import models
 
 models.Base.metadata.create_all(bind=engine)
@@ -17,7 +17,7 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-engine = create_engine(DATABASE_URL)
+# engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
