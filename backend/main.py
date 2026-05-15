@@ -37,6 +37,8 @@ def seed_data():
     finally:
         db.close()
 
+seed_data()
+
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
