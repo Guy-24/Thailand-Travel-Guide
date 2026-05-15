@@ -58,7 +58,7 @@ export default function LoginPage({ onLogin }) {
   const handleGoogleLogin = useGoogleLogin({
     flow: "auth-code",
     ux_mode: "redirect",
-    redirect_uri: "http://localhost:5173",
+    redirect_uri: window.location.origin,
   });
 
   return (
