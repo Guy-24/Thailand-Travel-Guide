@@ -50,7 +50,8 @@ async def google_callback(code: str, db: db_dep):
         "code": code,
         "client_id": GOOGLE_CLIENT_ID,
         "client_secret": GOOGLE_CLIENT_SECRET,
-        "redirect_uri": GOOGLE_REDIRECT_URI,
+        # "redirect_uri": GOOGLE_REDIRECT_URI,
+        "redirect_uri": "https://thailand-travel-guide-frontend.onrender.com",
         "grant_type": "authorization_code",
     }
     
