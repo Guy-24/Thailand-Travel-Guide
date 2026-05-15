@@ -1,5 +1,8 @@
 from __future__ import annotations
-
+from sqlalchemy.ext.compiler import compiles
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.dialects.postgresql import JSONB
+from database import Base
 from datetime import UTC, datetime
 
 from sqlalchemy import JSON, Boolean, DateTime, FetchedValue, Float, ForeignKey, Integer, String, Text, Index
@@ -22,6 +25,9 @@ class User(Base):
         server_default=func.now()
     )
     
+@compiles(JSONB, 'sqlite')
+def compile_jsonb_sqlite(type_, compiler, **kw):
+    return 'JSON'
 
 class Place(Base):
     __tablename__ = "places"
