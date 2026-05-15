@@ -123,7 +123,7 @@ function AttractionCard({ attraction, favoriteItems, toggleFavorite }) {
             </div>
             <button
               onClick={() => setIsReviewOpen(true)}
-              className="text-xs font-medium text-emerald-600 hover:text-emerald-700 border border-emerald-200 hover:border-emerald-400 px-3 py-1 rounded-full transition"
+              className="text-m font-medium text-emerald-600 hover:text-emerald-700 border border-emerald-200 hover:border-emerald-400 px-4 py-2 rounded-full transition"
             >
               รีวิว
             </button>

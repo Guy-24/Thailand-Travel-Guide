@@ -383,7 +383,6 @@ export default function Navbar({
                     </h3>
                     <p className="text-red-600 text-sm leading-relaxed">
                       การกระทำนี้ไม่สามารถย้อนกลับได้
-                      ข้อมูลการเดินทางและประวัติทั้งหมดของคุณจะถูกลบออกจากระบบทันที
                     </p>
                   </div>
 
