@@ -9,6 +9,13 @@ import models
 
 client = TestClient(app)
 
+from sqlalchemy.ext.compiler import compiles
+from sqlalchemy.dialects.postgresql import JSONB
+
+@compiles(JSONB, 'sqlite')
+def compile_jsonb_sqlite(type_, compiler, **kw):
+    return 'JSON'
+
 Base.metadata.create_all(bind=engine)
 # จำลองผู้ใช้ (Mock User) ที่ล็อกอินด้วย Google ผ่านแล้ว
 
