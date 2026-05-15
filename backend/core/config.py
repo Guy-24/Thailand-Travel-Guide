@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
     
     # CORS
-    ALLOWED_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8000","https://thailand-travel-guide-frontend.onrender.com"]
+    ALLOWED_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8000","https://thailand-travel-guide.onrender.com"]
     
     # แก้จุดนี้: ใส่ค่าเริ่มต้น (Default) ให้มันเลยครับ 
     # ต่อให้ไม่มีไฟล์ .env ระบบก็จะเอาค่านี้ไปใช้ และจะไม่เกิด Error ครับ
