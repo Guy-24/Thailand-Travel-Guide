@@ -8,7 +8,10 @@ from dotenv import load_dotenv
 from api import user, place, review
 from core.config import settings
 from core.dependencies import verify_current_user, db_dep
+from database import engine
+import models
 
+models.Base.metadata.create_all(bind=engine)
 
 load_dotenv()
 
