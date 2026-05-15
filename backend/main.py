@@ -11,10 +11,7 @@ from api import user, place, review
 from core.config import settings
 from core.dependencies import verify_current_user, db_dep
 import models
-from schemas import (
-    PlaceBase
-)
-
+from models import Place
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -22,7 +19,7 @@ models.Base.metadata.create_all(bind=engine)
 def seed_data():
     db = SessionLocal()
     try:
-        if db.query(PlaceBase).count() == 0:
+        if db.query(Place).count() == 0:
             file_path = os.path.join(os.path.dirname(__file__), "places.json")
             if not os.path.exists(file_path):
                 print(f"⚠️ Warning: {file_path} not found. Skipping seed.")
@@ -37,7 +34,7 @@ def seed_data():
                 if "id" in item: del item["id"]
                 
                 # สร้าง Object แบบปลอดภัย (กัน Error ถ้า JSON มีคีย์เกิน)
-                new_place = PlaceBase(**item) 
+                new_place = Place(**item) 
                 db.add(new_place)
             
             db.commit()
