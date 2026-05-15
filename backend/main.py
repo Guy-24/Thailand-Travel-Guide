@@ -5,13 +5,16 @@ from sqlalchemy.ext.declarative import declarative_base
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import sessionmaker
 import os
-from database import engine, Base
+from database import engine, SessionLocal
 from dotenv import load_dotenv 
 from api import user, place, review
 from core.config import settings
 from core.dependencies import verify_current_user, db_dep
 import models
-from models import Place
+from schemas import (
+    PlaceBase
+)
+
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -19,20 +22,28 @@ models.Base.metadata.create_all(bind=engine)
 def seed_data():
     db = SessionLocal()
     try:
-        if db.query(Place).count() == 0:
-            # หา path ของไฟล์ json
+        if db.query(PlaceBase).count() == 0:
             file_path = os.path.join(os.path.dirname(__file__), "places.json")
+            if not os.path.exists(file_path):
+                print(f"⚠️ Warning: {file_path} not found. Skipping seed.")
+                return
+
             with open(file_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-
+                
             for item in data:
-                new_place = Place(**item) # กระจายค่าจาก dict เข้า Model
+                # แก้ไขตรงนี้: ใส่เฉพาะคีย์ที่มีอยู่ใน Model เท่านั้น
+                # ลบ id ออกจาก item ถ้ามี เพราะฐานข้อมูลจะสร้างให้เอง
+                if "id" in item: del item["id"]
+                
+                # สร้าง Object แบบปลอดภัย (กัน Error ถ้า JSON มีคีย์เกิน)
+                new_place = PlaceBase(**item) 
                 db.add(new_place)
-
+            
             db.commit()
-            print(f"Successfully seeded {len(data)} places.")
+            print(f"✅ Successfully seeded {len(data)} places.")
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"❌ Seed Error: {e}") # จะโชว์ Error ใน Logs แทนการทำให้แอปพัง
         db.rollback()
     finally:
         db.close()
