@@ -22,8 +22,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install fastapi uvicorn pytest httpx requests sqlalchemy psycopg2-binary PyJWT argon2-cffi email-validator pgvector pydantic pydantic-settings python-dotenv
+        
         if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
-        pip install pytest httpx requests sqlalchemy psycopg2-binary PyJWT argon2-cffi email-validator pgvector
 
     - name: Run Tests
       env:
