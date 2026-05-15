@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from pydantic import json
+import json as standard_json
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,28 +19,29 @@ models.Base.metadata.create_all(bind=engine)
 def seed_data():
     db = SessionLocal()
     try:
-        if db.query(Place).count() == 0:
+        if db.query(Place).count() == 0: # ใช้ Place (Model) เท่านั้น
             file_path = os.path.join(os.path.dirname(__file__), "places.json")
+            
             if not os.path.exists(file_path):
-                print(f"⚠️ Warning: {file_path} not found. Skipping seed.")
+                print(f"⚠️ Warning: {file_path} not found.")
                 return
 
             with open(file_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
+                # 🚨 เปลี่ยนจาก json.load เป็น standard_json.load
+                data = standard_json.load(f) 
                 
             for item in data:
-                # แก้ไขตรงนี้: ใส่เฉพาะคีย์ที่มีอยู่ใน Model เท่านั้น
-                # ลบ id ออกจาก item ถ้ามี เพราะฐานข้อมูลจะสร้างให้เอง
                 if "id" in item: del item["id"]
                 
-                # สร้าง Object แบบปลอดภัย (กัน Error ถ้า JSON มีคีย์เกิน)
-                new_place = Place(**item) 
+                # กรองข้อมูลให้ตรงกับ Model (ป้องกันข้อมูลใน JSON เกิน)
+                valid_data = {k: v for k, v in item.items() if hasattr(Place, k)}
+                new_place = Place(**valid_data) 
                 db.add(new_place)
             
             db.commit()
             print(f"✅ Successfully seeded {len(data)} places.")
     except Exception as e:
-        print(f"❌ Seed Error: {e}") # จะโชว์ Error ใน Logs แทนการทำให้แอปพัง
+        print(f"❌ Seed Error: {e}")
         db.rollback()
     finally:
         db.close()
