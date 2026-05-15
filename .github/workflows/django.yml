@@ -33,10 +33,9 @@ jobs:
 
     - name: Run Tests
       env:
-        # ส่งค่าไปดักทุกรูปแบบที่ Pydantic อาจจะเรียกหา
         DATABASE_URL: "sqlite:///./test.db"
-        SECRET_KEY: "ci-secret-123"
-        secret_key: "ci-secret-123"
+        SECRET_KEY: "ci-test-key"
+        secret_key: "ci-test-key"
         ALGORITHM: "HS256"
         CLIENT_ID: "mock_id"
         CLIENT_SECRET: "mock_secret"
