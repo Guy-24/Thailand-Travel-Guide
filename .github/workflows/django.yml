@@ -2,20 +2,13 @@ name: Thailand Travel Guide CI
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "dev" ] # เพิ่ม dev เข้าไปเพื่อให้มันรันที่ branch นี้ด้วย
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "dev" ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    # ใส่ env ไว้ตรงนี้เพื่อให้ทุกขั้นตอน (Steps) มองเห็นเหมือนกันหมด
-    env:
-      DATABASE_URL: sqlite:///./test.db
-      SECRET_KEY: "super-secret-key-for-testing-only" 
-      ALGORITHM: "HS256"
-      CLIENT_ID: "mock_id"
-      CLIENT_SECRET: "mock_secret"
 
     steps:
     - name: Check out code
@@ -34,7 +27,7 @@ jobs:
     - name: Run Tests
       env:
         DATABASE_URL: "sqlite:///./test.db"
-        SECRET_KEY: "ci-test-key-123"
+        SECRET_KEY: "ci-test-key-12345"
         ALGORITHM: "HS256"
         CLIENT_ID: "mock_id"
         CLIENT_SECRET: "mock_secret"
