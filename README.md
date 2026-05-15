@@ -77,6 +77,6 @@ models.py: โครงสร้างตารางฐานข้อมูล
 frontend/: โค้ดส่วนหน้าบ้าน (React)
 
 👤 ผู้พัฒนา
-Guy-24 (GitHub ID)
+Guy-24 (https://github.com/Guy-24)
 
 CSS497 DevOps Project
